@@ -6,14 +6,13 @@ from django.views.static import serve
 
 from core.yasg import urlpatterns_yasg
 
-landing_urls = [
+urls = [
     path("admin/", admin.site.urls),
-    path("v1/", include("apps.settings.urls")),
     path("", include(urlpatterns_yasg)),
     re_path(r'^back_media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 
 ]
 urlpatterns = [
-    path("api/landing/", include(landing_urls))
+    path("api/", include(urls))
 ]

@@ -1,74 +1,102 @@
-from django.shortcuts import render
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
 
-from app.settings.models import PatientAdvice, BannerHome, Advantage, ServiceShowcase, Settings, FreeConcsultation, Team, Services
-from app.settings.serializers import BannerHomeSerializers, AdvantageSerializer, ServiceShowcaseSerializer, SettingsSerializer, PatientAdviceSerializer, FreeConcsultationSerializers, TeamSerializer,\
-ServicesSerializer
+from app.settings.models import (
+    Director,
+    HistoryClinic,
+    AboutClinic,
+    AdvicePatient,
+    Event,
+    PatientTip,
+    VideoMaterial,
+    RecommendedSpecialist,
+    PreparationArticle,
+    FAQ,
+)
 
-class BannerAPI(mixins.ListModelMixin, GenericViewSet):
-    queryset = BannerHome.objects.all()
-    serializer_class = BannerHomeSerializers
+from app.settings.serializers import (
+    DirectorSerializer,
+    HistoryClinicSerializer,
+    AboutClinicSerializer,
+    AdvicePatientSerializer,
+    EventSerializer,
+    PatientTipSerializer,
+    VideoMaterialSerializer,
+    RecommendedSpecialistSerializer,
+    PreparationArticleSerializer,
+    FAQSerializer,
+)
+
+# ---------------------- PATIENT TIPS ---------------------
+class PatientTipViewSet(viewsets.ModelViewSet):
+    queryset = PatientTip.objects.all()
+    serializer_class = PatientTipSerializer
 
 
-class AdvantageAPI(mixins.ListModelMixin, GenericViewSet):
-    queryset = Advantage.objects.all()
-    serializer_class = AdvantageSerializer
-
-class ServiceShowcaseAPI(
-    mixins.ListModelMixin, GenericViewSet
-):
-    queryset = ServiceShowcase.objects.all()
-    serializer_class = ServiceShowcaseSerializer
+class VideoMaterialViewSet(viewsets.ModelViewSet):
+    queryset = VideoMaterial.objects.all()
+    serializer_class = VideoMaterialSerializer
 
 
-class SettingsAPI(
-    mixins.ListModelMixin, GenericViewSet
-):
-    queryset = Settings.objects.all()
-    serializer_class = SettingsSerializer
+class RecommendedSpecialistViewSet(viewsets.ModelViewSet):
+    queryset = RecommendedSpecialist.objects.all()
+    serializer_class = RecommendedSpecialistSerializer
 
-class PatientAdviceAPI(
+
+class PreparationArticleViewSet(viewsets.ModelViewSet):
+    queryset = PreparationArticle.objects.prefetch_related("images")
+    serializer_class = PreparationArticleSerializer
+
+
+class FAQViewSet(viewsets.ModelViewSet):
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer
+
+
+
+##################### ABOUT PAGE #################################
+
+
+class DirectorAPI(
     mixins.ListModelMixin,
     GenericViewSet
 ):
-    queryset = PatientAdvice.objects.all()
-    serializer_class = PatientAdviceSerializer
-
-class FreeConcsultationAPI(mixins.CreateModelMixin, GenericViewSet):
-    queryset = FreeConcsultation.objects.all()
-    serializer_class = FreeConcsultationSerializers
-
-
-##################### HOME PAGE #################################
-
-
-class TeamAPI(mixins.ListModelMixin, GenericViewSet):
     queryset = (
-        Team.objects
+        Director.objects
         .prefetch_related(
-            "achievements",
-            "skills"
+            "gallery"
         )
     )
-    serializer_class =  TeamSerializer
+    serializer_class = DirectorSerializer
 
-##################### TEAM #################################
 
-class ServicesAPI(
+class HistoryClinicAPI(
     mixins.ListModelMixin,
     GenericViewSet
 ):
-    serializer_class = ServicesSerializer
+    queryset = HistoryClinic.objects.all()
+    serializer_class = HistoryClinicSerializer
 
-    def get_queryset(self):
-        queryset = Services.objects.all()
 
-        service_type = self.request.query_params.get("type")
+class AboutClinicAPI(
+    mixins.ListModelMixin,
+    GenericViewSet
+):
+    queryset = AboutClinic.objects.all()
+    serializer_class = AboutClinicSerializer
 
-        if service_type:
-            queryset = queryset.filter(type__iexact=service_type)
 
-        return queryset
+class AdvicePatientAPI(
+    mixins.ListModelMixin,
+    GenericViewSet
+):
+    queryset = AdvicePatient.objects.all()
+    serializer_class = AdvicePatientSerializer
 
-##################### service #################################
+
+class EventAPI(
+    mixins.ListModelMixin,
+    GenericViewSet
+):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer

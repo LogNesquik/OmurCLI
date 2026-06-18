@@ -1,101 +1,66 @@
-from modeltranslation.translator import register, TranslationOptions
-from app.settings.models import BannerHome, BannerImage, Advantage, Team, Achievement, Skills, ServiceShowcase, Settings, PatientAdvice, Services
+from modeltranslation.translator import translator, TranslationOptions, register
+from .models import (
+    Director,
+    HistoryClinic,
+    AboutClinic,
+    AdvicePatient,
+    Event,
+
+    PatientTip,
+    VideoMaterial,
+    RecommendedSpecialist,
+    PreparationArticle,
+    FAQ,
+)
+
+# ------------------------ patient tips ------------------------
 
 
-@register(BannerHome)
-class BannerHomeTranslationOptions(TranslationOptions):
-    fields = (
-        "title",
-        "description",
-    )
+@register(PatientTip)
+class PatientTipTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
+
+@register(VideoMaterial)
+class VideoMaterialTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
+
+@register(RecommendedSpecialist)
+class RecommendedSpecialistTranslationOptions(TranslationOptions):
+    fields = ('full_name', 'specialty')
+
+@register(PreparationArticle)
+class PreparationArticleTranslationOptions(TranslationOptions):
+    fields = ('title', 'content')
+
+@register(FAQ)
+class FAQTranslationOptions(TranslationOptions):
+    fields = ('question', 'answer')
 
 
-@register(BannerImage)
-class BannerImageTranslationOptions(TranslationOptions):
-    fields = ()
+# ------------- ------------------ ABOUT PAGE -------------------
+
+class DirectorTranslationOptions(TranslationOptions):
+    fields = ('fio', 'position', 'description')
 
 
-@register(Advantage)
-class AdvantageTranslationOptions(TranslationOptions):
-    fields = (
-        "title",
-        "description",
-    )
-
-@register(ServiceShowcase)
-class ServiceShowcaseTranslation(TranslationOptions):
-    fields = (
-        "title",
-        "description",
-    )
-
-@register(Settings)
-class SettingsTranslationOptions(
-    TranslationOptions
-):
-    fields = (
-        "title_services",
-        "description_services",
-
-        "title_center",
-        "description_center",
-
-        "title_pacsient",
-        "description_pacsient",
-
-        "title_conscintation",
-        "description_conscintation",
-    )
-
-@register(PatientAdvice)
-class PatientAdviceTranslation(
-    TranslationOptions
-):
-    fields = (
-        "title",
-        "description",
-    )
+class HistoryClinicTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
 
 
-##################### HOME PAGE #################################
-
-@register(Team)
-class TeamTranslation(
-    TranslationOptions
-):
-    fields = (
-        "fio",
-        "direction",
-    )
+class AboutClinicTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
 
 
-@register(Achievement)
-class AchievementTranslation(
-    TranslationOptions
-):
-    fields = (
-        "title",
-    )
+class AdvicePatientTranslationOptions(TranslationOptions):
+    fields = ('title', 'description')
 
 
-@register(Skills)
-class SkillsTranslation(
-    TranslationOptions
-):
-    fields = (
-        "title",
-    )
-
-##################### TEAM #################################
+class EventTranslationOptions(TranslationOptions):
+    fields = ('title',)
 
 
-@register(Services)
-class ServicesTranslation(
-    TranslationOptions
-):
-    fields = (
-        "title",
-        "description",
-    )
-
-##################### service #################################
+translator.register(Director, DirectorTranslationOptions)
+translator.register(HistoryClinic, HistoryClinicTranslationOptions)
+translator.register(AboutClinic, AboutClinicTranslationOptions)
+translator.register(AdvicePatient, AdvicePatientTranslationOptions)
+translator.register(Event, EventTranslationOptions)

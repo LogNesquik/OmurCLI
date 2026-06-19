@@ -87,7 +87,7 @@ class AdvicePatient(models.Model):
 class Event(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок", blank=True)
     image = models.ImageField(upload_to="events/", verbose_name="Фото", blank=True, null=True)
-    video = models.FileField(upload_to="events/", verbose_name="Видео")
+    video = models.URLField(verbose_name="Видео", blank=True, null=True)
 
     class Meta:
         verbose_name = "Мероприятие"

@@ -169,6 +169,7 @@ class PreparationArticleImage(models.Model):
 class FAQ(BaseModel):
     question = models.CharField(max_length=500)
     answer = models.TextField()
+    image = models.ImageField(upload_to="faq/", blank=True, null=True)
 
     def __str__(self):
         return self.question

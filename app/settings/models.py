@@ -3,9 +3,6 @@ from django.db import models
 # BASE MODEL
 
 class BaseModel(models.Model):
-    is_active = models.BooleanField(default=True)
-    sort_order = models.PositiveIntegerField(default=0)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -17,7 +14,6 @@ class BaseModel(models.Model):
 
 # ----------------------- О НАС -----------------------
 class Director(models.Model):
-    # Заголовок делает - frontend
     fio = models.CharField(max_length=255, verbose_name="ФИО директора")
     position = models.CharField(max_length=255, verbose_name="Должность директора")
     image = models.ImageField(upload_to="director/", verbose_name="Фото директора")
@@ -38,8 +34,8 @@ class DirectorGallery(models.Model):
 
     class Meta:
         ordering = ["order"]
-        verbose_name = "Галерея руководителя"
-        verbose_name_plural = "Галерея руководителей"
+        verbose_name = "Изображение"
+        verbose_name_plural = "Изображения"
 
     def __str__(self):
         return f"Галерея {self.director.fio} - {self.order}"
@@ -50,10 +46,8 @@ class HistoryClinic(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     description = models.TextField(verbose_name="Описание")
     image = models.ImageField(upload_to="history_clinic/", verbose_name="Фото")
-    order = models.CharField(max_length=10, default=0, verbose_name="Порядок")
 
     class Meta:
-        ordering = ["order"]
         verbose_name = "История клиники"
         verbose_name_plural = "История клиники"
 
@@ -85,8 +79,7 @@ class AdvicePatient(models.Model):
     
 
 class Event(models.Model):
-    title = models.CharField(max_length=255, verbose_name="Заголовок", blank=True)
-    image = models.ImageField(upload_to="events/", verbose_name="Фото", blank=True, null=True)
+    image = models.ImageField(upload_to="events/", verbose_name="Превью видео", blank=True, null=True)
     video = models.URLField(verbose_name="Видео", blank=True, null=True)
 
     class Meta:
@@ -99,11 +92,9 @@ class Event(models.Model):
 # ----------------------- Советы для пациентов -----------------------
 
 class PatientTip(BaseModel):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to="patient_tips/")
-    button_text = models.CharField(max_length=255, blank=True)
-    button_url = models.URLField(blank=True)
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание")
+    image = models.ImageField(upload_to="patient_tips/", verbose_name="Фото")
 
     def __str__(self):
         return self.title
@@ -114,10 +105,10 @@ class PatientTip(BaseModel):
         verbose_name_plural = 'Советы для пациентов'
 
 class VideoMaterial(BaseModel):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    thumbnail = models.ImageField(upload_to="video_materials/")
-    video_url = models.URLField()
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    description = models.TextField(verbose_name="Описание")
+    thumbnail = models.ImageField(upload_to="video_materials/", verbose_name="Баннер видео")
+    video_url = models.URLField(verbose_name="URL видео")
 
     def __str__(self):
         return self.title
@@ -128,10 +119,9 @@ class VideoMaterial(BaseModel):
 
 
 class RecommendedSpecialist(BaseModel):
-    full_name = models.CharField(max_length=255)
-    specialty = models.CharField(max_length=255)
-    photo = models.ImageField(upload_to="specialists/")
-    profile_url = models.URLField(blank=True)
+    full_name = models.CharField(max_length=255, verbose_name="ФИО специалиста")
+    specialty = models.CharField(max_length=255, verbose_name="Специализация")
+    photo = models.ImageField(upload_to="specialists/", verbose_name="Фото специалиста")
 
     def __str__(self):
         return self.full_name
@@ -142,8 +132,9 @@ class RecommendedSpecialist(BaseModel):
 
 
 class PreparationArticle(BaseModel):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
+    content = models.TextField(verbose_name="Содержание статьи(первый абзац)")
+    title = models.CharField(max_length=255, verbose_name="Заголовок статьи")
+    description = models.TextField(blank=True, null=True, verbose_name="Описание статьи")
 
     def __str__(self):
         return self.title
@@ -159,7 +150,7 @@ class PreparationArticleImage(models.Model):
         on_delete=models.CASCADE,
         related_name="images"
     )
-    image = models.ImageField(upload_to="preparation_articles/")
+    image = models.ImageField(upload_to="preparation_articles/", verbose_name="Изображение")
     sort_order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -168,14 +159,16 @@ class PreparationArticleImage(models.Model):
 
 
 class FAQ(BaseModel):
-    question = models.CharField(max_length=500)
-    answer = models.TextField()
-    image = models.ImageField(upload_to="faq/", blank=True, null=True)
+    order = models.CharField(max_length=4, default=0, verbose_name="Порядок вопросов")
+    question = models.CharField(max_length=500, verbose_name="Вопрос")
+    answer = models.TextField(verbose_name="Ответ")
+    image = models.ImageField(upload_to="faq/", blank=True, null=True, verbose_name="Фото")
 
     def __str__(self):
         return self.question
     
     class Meta:
+        ordering = ["order"]
         verbose_name = 'Часто задаваемый вопрос'
         verbose_name_plural = 'Часто задаваемые вопросы'
 

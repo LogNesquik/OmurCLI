@@ -55,13 +55,11 @@ class HistoryClinicAdmin(TabbedTranslationAdmin):
         "title",
         "description",
         "image",
-        "order",
     )
     search_fields = (
         "year",
         "title",
     )
-    ordering = ("order",)
 
 @admin.register(AboutClinic)
 class AboutClinicAdmin(TabbedTranslationAdmin):
@@ -85,19 +83,19 @@ class AdvicePatientAdmin(TabbedTranslationAdmin):
     )
 
 @admin.register(Event)
-class EventAdmin(TabbedTranslationAdmin):
+class EventAdmin(admin.ModelAdmin):
     list_display = (
-        "title",
+        "image",
         "video"
     )
     search_fields = (
-        "title",
+        "video",
     )
 
 # ------------------- PATIENT PAGE -------------------
 @admin.register(PatientTip)
 class PatientTipAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'title', 'description', 'image', 'button_text', 'button_url')
+    list_display = ('id', 'title', 'description', 'image')
     search_fields = ('title',)
 
 @admin.register(VideoMaterial)
@@ -107,7 +105,7 @@ class VideoMaterialAdmin(TabbedTranslationAdmin):
 
 @admin.register(RecommendedSpecialist)
 class RecommendedSpecialistAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'full_name', 'specialty', 'photo', 'profile_url')
+    list_display = ('id', 'full_name', 'specialty', 'photo')
     search_fields = ('full_name',)
 
 @admin.register(PreparationArticle)
@@ -118,5 +116,5 @@ class PreparationArticleAdmin(TabbedTranslationAdmin):
 
 @admin.register(FAQ)
 class FAQAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'question', 'answer')
+    list_display = ('id', 'question', 'answer', 'image', 'order')
     search_fields = ('question',)

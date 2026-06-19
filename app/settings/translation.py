@@ -4,8 +4,7 @@ from .models import (
     HistoryClinic,
     AboutClinic,
     AdvicePatient,
-    Event,
-
+    
     PatientTip,
     VideoMaterial,
     RecommendedSpecialist,
@@ -55,12 +54,8 @@ class AdvicePatientTranslationOptions(TranslationOptions):
     fields = ('title', 'description')
 
 
-class EventTranslationOptions(TranslationOptions):
-    fields = ('title',)
-
 
 translator.register(Director, DirectorTranslationOptions)
 translator.register(HistoryClinic, HistoryClinicTranslationOptions)
 translator.register(AboutClinic, AboutClinicTranslationOptions)
 translator.register(AdvicePatient, AdvicePatientTranslationOptions)
-translator.register(Event, EventTranslationOptions)

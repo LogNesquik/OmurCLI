@@ -11,6 +11,13 @@ from app.settings.views import (
     RecommendedSpecialistViewSet,
     PreparationArticleViewSet,
     FAQViewSet,
+    BannerAPI, 
+    AdvantageAPI, 
+    ServiceShowcaseAPI, 
+    PatientAdviceAPI, 
+    FreeConcsultationAPI, 
+    TeamAPI, 
+    ServicesAPI
 )
 
 router = DefaultRouter()
@@ -26,5 +33,16 @@ router.register("history", HistoryClinicAPI, basename="history")
 router.register("about-clinic", AboutClinicAPI, basename="about-clinic")
 router.register("advice-patient", AdvicePatientAPI, basename="advice-patient")
 router.register("event", EventAPI, basename="event")
+
+# ------------------- HOME PAGE -------------------
+router.register("banner", BannerAPI, basename="banner")
+router.register("advantage", AdvantageAPI, basename="advantage")
+router.register("showcase", ServiceShowcaseAPI, basename="showcase")
+router.register("patient-advice",PatientAdviceAPI,basename="patient-advice")
+router.register("free", FreeConcsultationAPI, basename="free")
+
+router.register("team",TeamAPI,basename="team")
+
+router.register("service",ServicesAPI,basename="service")
 
 urlpatterns = router.urls

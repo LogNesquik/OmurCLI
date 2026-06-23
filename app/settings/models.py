@@ -159,8 +159,8 @@ class PatientAdvice(models.Model):
     )
 
     class Meta:
-        verbose_name = "Совет пациенту"
-        verbose_name_plural = "Советы пациентам"
+        verbose_name = "Совет нашиму пациенту"
+        verbose_name_plural = "Советы нашим пациентам"
 
     def __str__(self):
         return self.title
